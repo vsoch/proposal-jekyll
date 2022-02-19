@@ -1,0 +1,113 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing these this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+
+title: Proposals Jekyll
+description: > # this means to ignore newlines until "baseurl:"
+  Proposal framework for GitHub pages
+
+# DO NOT CHANGE THE LINE OF THIS FILE without editing .circleci/circle_urls.sh
+baseurl: "/proposal-jekyll" # the subpath of your site, e.g. /blog
+
+# This is mostly for testing
+url: "https://vsoch.github.io" # the base hostname & protocol for your site
+
+# Keywords (space separated)
+keywords: "documentation theme"
+
+# Add colorful permalinks to headers
+# change colors in _includes/permalinks.html
+add_permalinks: true
+
+# Optional
+twitter: vsoch
+linkedin: vsochat
+support: https://github.com/vsoch/proposal-jekyll/issues
+repo: "https://github.com/vsoch/proposal-jekyll"
+github_user: vsoch
+github_repo: proposal-jekyll
+# discord: https://community.discord.com
+
+# If you have a logo, put here to include in meta tags
+logo: assets/img/tw-jekyll.png
+
+# branch to edit on GitHub
+github_branch: main
+
+# If not set, badge color (background) defaults to violet
+# badge_color: "#2bcf98"
+badge_rounded: true
+
+# Build settings
+markdown: kramdown
+
+# Site colors!
+accent_color: "#FFAA4C"
+main_color: "#344CB7"
+
+# Badge colors
+draft_color: "#3282B8"
+inprogress_color: "#FFAA4C"
+completed_color: "#344CB7"
+
+# Permalink colors
+fourth_fade: "#3282B8"
+second_fade: "#035397"
+first_fade: "#5089C6"
+
+# If you add tags to pages, define this variable to link them to some external search
+# If you want to link to tags locally on the site, leave this commented out
+# tag_search_endpoint: https://ask.cyberinfrastructure.org/search?q=
+tag_color: primary # danger, success, warning, primary, info, secondary
+
+permalink: /:year/:title/
+markdown: kramdown
+exclude: [_site, CHANGELOG.md, LICENSE, README.md, vendor]
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:path
+  proposals:
+    output: true
+    permalink: /:collection/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: "_docs"
+      type: "docs"
+    values:
+      layout: page
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: "posts"
+      type: "posts"
+    values:
+      layout: "post"
+  - 
+    scope:
+      path: "_proposals"
+      type: "proposal"
+    values:
+      layout: proposal

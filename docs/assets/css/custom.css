@@ -1,0 +1,22 @@
+---
+layout: null
+---
+
+{% if site.main_color %}.docs a.active, .docs a.active > .text\:code {
+  --tw-text-opacity: 1;
+  color: {{ site.main_color }}
+}
+
+.text-violet-500, .text-violet-700 {
+  --tw-text-opacity: 1;
+  color: {{ site.main_color }};
+}{% endif %}
+
+
+{% if site.fourth_color %}
+/* TODO this isn't working / changing yet */
+.DocSearch-Button:focus {
+  --tw-border-opacity: 1;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var({{ site.fourth_color }});
+}{% endif %}
