@@ -20,7 +20,7 @@ for file in ${removed}; do
 
     name=$(basename ${file})
     draft=_proposals/drafts/${name}
-    approved=_proposals/drafts/${name}
+    approved=_proposals/approved/${name}
 
     # If the proposal exists, remove from site
     for dest in ${draft} ${approved}; do
