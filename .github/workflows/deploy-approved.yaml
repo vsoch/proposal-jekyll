@@ -1,0 +1,37 @@
+# Given a push to main, deploy new proposals to the site!
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-approved:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Find Changed or New Proposals
+        id: changed-files
+        uses: tj-actions/changed-files@32d6fb28f082f273420574e9de0a30be993bba58
+        with:
+          separator: " "
+
+      - name: Add approved files to site
+        id: added_updated_files
+        env:
+          changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: /bin/bash .github/scripts/deploy.py approved ${changed_files}
+
+      - name: Remove deleted proposals
+        id: removed_files
+        env:
+          changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: /bin/bash .github/scripts/deploy.py remove ${changed_files}
+
+      - name: Checkout New Branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_FROM: ${{ github.event.inputs.branch }}
+          removed: ${{ steps.removed_files.outputs.removed }}
+          proposals: ${{ steps.added_updated_files.outputs.proposals }}
+        run: /bin/bash .github/scripts/deploy_approved.sh

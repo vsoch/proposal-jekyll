@@ -1,8 +1,8 @@
 #!/bin/bash
 
 set -e
-if [[ "${proposals}" == "" ]]; then
-    printf "No new proposals found\n"
+if [[ "${proposals}" == "" ]] && [[ "${removed}" == "" ]]; then
+    printf "No new or removed proposals found\n"
     exit 0
 fi
 
@@ -15,12 +15,25 @@ git branch
 git config --global user.name "github-actions"
 git config --global user.email "github-actions@users.noreply.github.com"
 
+# Removed proposals
+for file in ${removed}; do
+
+    name=$(basename ${file})
+    dest=_proposals/${name}
+
+    # If the proposal exists, remove from site
+    if [[ -f ${dest} ]]; then
+        printf "Proposal draft ${file} is removed, deleting ${dest}\n"
+        rm ${dest}
+    fi
+done
+
 # Add new proposals!
 mkdir -p _proposals
 for file in ${proposals}; do
     name=$(basename ${file})
     dest=_proposals/${name}
-    printf "Copying ${file} -> ${dest}"
+    printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}
 done

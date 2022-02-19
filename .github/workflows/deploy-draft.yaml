@@ -1,5 +1,6 @@
 
 # Given a pull request, deploy the draft to the site
+# Removed files are not removed until merge
 on:
   pull_request: []
 
@@ -16,16 +17,15 @@ jobs:
         with:
           separator: " "
 
-      - name: Add changed files to site
-        if: github.event_name != 'schedule'
-        id: parsed_files
+      - name: Find changed files to add
+        id: changed_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: /bin/bash .github/scripts/find_drafts.py ${changed_files}
+        run: /bin/bash .github/scripts/deploy.py draft ${changed_files}
 
       - name: Checkout New Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_FROM: ${{ github.event.inputs.branch }}
-          proposals: ${{ steps.parsed_files.outputs.proposals }}
+          proposals: ${{ steps.changed_files.outputs.proposals }}
         run: /bin/bash .github/scripts/deploy_drafts.sh

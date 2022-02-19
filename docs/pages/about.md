@@ -3,12 +3,20 @@ title: About
 permalink: /about/
 ---
 
-This is a [starter template](https://vsoch.github.com/tw-jekyll/) for a Tailwind jekyll theme, based
-on [these docs](https://github.com/superfly/docs) that are based on [Tailwind css](https://tailwindcss.com/docs/installation),
-however everything has been modified to work on GitHub pages (using Jekyll). If you don't need
-native deployment on GitHub pages, then please consider checking out Tailwind. 
-The original [Apache License](https://github.com/vsoch/tw-jekyll/tree/main/LICENSE) is included.
+This is a template and actions to help you to collaboratively work on things.
+With proposals-jekyll:
 
+1. New pull requests open on the repository are considered proposals.
+2. A new proposal will trigger a workflow to add the draft to the web interface
+3. Merging a pull request will add the draft as a final "approved" state, in which case it can be worked on further via PR.
+
+This means the following workflows:
+
+ 1. on PR open, update file on gh-pages with draft state
+ 2. on PR close, if file not already in main, remove from gh-pages
+ 3. on PR merge, also update file on gh-pages with inprogress state
+
+It is based on the [tw-jekyll theme](https://vsoch.github.com/tw-jekyll/) for a Tailwind jekyll theme.
 See the [respository]({{ site.repo }}) for more details.
 
 ## Support
