@@ -1,4 +1,4 @@
-name: Clean up closed PR
+name: Clean Up Closed PR
 
 on:
   pull_request:

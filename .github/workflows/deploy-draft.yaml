@@ -1,3 +1,4 @@
+name: Deploy Draft
 
 # Given a pull request:
 # 1. On open or reopen check if there is a duplicate draft (and do not allow)
