@@ -6,6 +6,8 @@ if [[ "${proposals}" == "" ]]; then
     exit 0
 fi
 
+printf "Proposals:\n${proposals}"
+
 # Add new draft proposals!
 mkdir -p _proposals/drafts
 

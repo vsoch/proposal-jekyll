@@ -100,7 +100,7 @@ def find_removed(files):
     for filename in files:
         if not os.path.exists(filename):
             removed.append(filename)
-    print("::set-output name=removed::$%s" % " ".join(removed))
+    print("::set-output name=removed::%s" % " ".join(removed))
 
 
 def prepare_preposals(files, template_string):
@@ -126,7 +126,7 @@ def prepare_preposals(files, template_string):
         final_files.append(tmppath)
 
     # When we have final files, set in environment
-    print("::set-output name=proposals::$%s" % " ".join(final_files))
+    print("::set-output name=proposals::%s" % " ".join(final_files))
 
 
 def prepare_approved(files):
