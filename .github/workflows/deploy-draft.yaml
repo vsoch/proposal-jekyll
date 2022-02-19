@@ -4,15 +4,15 @@
 # 2. On update deploy the draft to the site
 # Removed files are not removed until merge
 on:
-  pull_request_target:
-  branches:
-    - main
+  pull_request: []
 
 jobs:
   deploy-draft:
     runs-on: ubuntu-latest
+    if: (github.ref != 'refs/heads/gh-pages')
     steps:
       - name: Checkout
+        if: (github.ref != 'refs/heads/gh-pages')
         uses: actions/checkout@v2
 
       - name: Find Changed Proposals

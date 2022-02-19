@@ -1,15 +1,13 @@
 name: Clean up closed PR
 
 on:
-  pull_request_target:
+  pull_request:
     types: [closed]
-  branches:
-    - main
 
 jobs:
   clean-up:
-    # only run if the PR has been closed without being merged
-    if: github.event.pull_request.merged == false
+    # only run if the PR has been closed without being merged, and it wasn't against gh-pages
+    if: (github.event.pull_request.merged == false && github.ref != 'refs/heads/gh-pages')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
