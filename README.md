@@ -17,6 +17,13 @@ This means the following workflows:
 
 **under development**
 
+## Quick Start
+
+1. Fork the repository
+2. Make changes to the _config.yaml and templates in [docs](docs)
+3. Push to your branch and run the create-pages workflow
+4. Turn on GitHub pages in your settings
+
 ## Usage
 
 ### 1. Get the code

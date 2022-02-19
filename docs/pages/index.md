@@ -9,6 +9,7 @@ permalink: /
 This is a started template with additional functionality added to [tw-jekyll](https://vsoch.github.com/tw-jekyll/) 
 to provide you or your organization an automated process to create and review proposals.
 
+{% if site.proposals %}
 ## Proposals
 
 <br>
@@ -16,6 +17,8 @@ to provide you or your organization an automated process to create and review pr
 {% for proposal in site.proposals %}
  - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
 {% endfor %}
+
+{% endif %}
 
 {% include callout.html text="I fell in love with this template as soon as I saw it, and knew that I wanted others to be empowered to use it." %}
 

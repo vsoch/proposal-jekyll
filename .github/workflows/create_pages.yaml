@@ -12,7 +12,7 @@ on:
     types: [created]
 
 jobs:
-  build:
+  create-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
