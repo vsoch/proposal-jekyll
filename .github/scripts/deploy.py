@@ -85,7 +85,7 @@ def is_correct(filename):
         return False
 
     # and only have lowercase and -
-    basename = os.path.basename(filename)
+    basename = os.path.basename(filename).replace('.md', '')
     if not re.search("^[a-z0-9-]*$", basename):
         print(
             "%s contains invalid characters: only lowercase letters, numbers, and - are allowed!"
@@ -103,8 +103,7 @@ def find_removed(files):
     for filename in files:
         if not os.path.exists(filename):
             removed.append(filename)
-    # Add non existing file so we correctly parse the list and not letters!
-    print("::set-output name=removed::%s" % " ".join(removed) + " skip")
+    print("::set-output name=removed::%s" % " ".join(removed))
 
 
 def prepare_preposals(files, template_string):
@@ -130,7 +129,7 @@ def prepare_preposals(files, template_string):
         final_files.append(tmppath)
 
     # When we have final files, set in environment
-    print("::set-output name=proposals::%s" % " ".join(final_files) + " skip")
+    print("::set-output name=proposals::%s" % " ".join(final_files))
 
 
 def prepare_approved(files):
