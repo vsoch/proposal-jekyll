@@ -32,7 +32,9 @@ if  [[ ! -d "docs" ]]; then
 else
     # Update current content to what is in main
     cp -R /tmp/repo/docs/* docs/
-    cp -R /tmp/repo/proposals/* proposals/
+    if [[ -d "/tmp/repo/proposals/" ]]; then
+        cp -R /tmp/repo/proposals/* proposals/
+    fi
     cp -R /tmp/repo/.github/* .github/
     cp -R /tmp/repo/README.md README.md
 fi
