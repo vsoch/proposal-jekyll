@@ -123,7 +123,7 @@ def prepare_preposals(files, template_string):
         content = template + "\n\n" + read_file(filename)
 
         # Write to final location
-        tmppath = os.path.join(tmpfile, os.path.basename(filename))
+        tmppath = os.path.join(tmpdir, os.path.basename(filename))
         with open(tmppath, "w") as fd:
             fd.write(content)
         final_files.append(tmppath)
