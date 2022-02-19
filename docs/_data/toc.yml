@@ -4,20 +4,28 @@
     - title: "Getting Started"
       url: "docs/getting-started"
       children:
-        - title: Features
-          url: "docs/getting-started#getting-started"
-        - title: Development
-          url: "docs/getting-started#development"
-        - title: Customization
-          url: "docs/getting-started#customization"
+        - title: Proposals
+          url: "docs/getting-started"
     - title: "About"
       url: "about"
-    - title: "News"
-      url: "news"
+
+- title: Development
+  url: docs
+  links:
+    - title: "Development"
+      url: "docs/development"
+      children:
+        - title: Features
+          url: "docs/development#getting-started"
+        - title: Development
+          url: "docs/development#development"
+        - title: Customization
+          url: "docs/development#customization"
+
 - title: "Extras"
   url: "docs/extras"
   links:
-    - title: Quizzes
-      url: "docs/extras/example-quiz"
+    - title: "News"
+      url: "news"
     - title: Tags Page
       url: "tags"

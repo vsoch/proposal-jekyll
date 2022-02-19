@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy initial pages to (must be gh-pages)'     
+        required: true
+        default: 'gh-pages' 
+        type: choice
+        options:
+        - gh-pages
+  repository_dispatch:
+    types: [created]
+
+jobs:
+  create-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Checkout New Branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: /bin/bash .github/scripts/create_pages.sh
