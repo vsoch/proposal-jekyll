@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch to deploy initial pages to'     
+        description: 'Branch to deploy initial pages to (must be gh-pages)'     
         required: true
         default: 'gh-pages' 
         type: choice
@@ -20,5 +20,4 @@ jobs:
       - name: Checkout New Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_FROM: ${{ github.event.inputs.branch }}
         run: /bin/bash .github/scripts/create_pages.sh

@@ -6,7 +6,8 @@ if [[ "${proposals}" == "" ]]; then
     exit 0
 fi
 
-printf "Proposals:\n${proposals}"
+BRANCH_FROM=${BRANCH_FROM:-gh-pages}
+printf "Proposals:\n${proposals}\n"
 
 # Add new draft proposals!
 mkdir -p _proposals/drafts
@@ -19,7 +20,7 @@ for file in ${proposals}; do
     fi    
     name=$(basename ${file})
     dest=_proposals/drafts/${name}
-    printf "Copying ${file} -> ${dest}"
+    printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}
 done

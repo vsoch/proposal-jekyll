@@ -31,7 +31,6 @@ jobs:
       - name: Checkout New Branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_FROM: ${{ github.event.inputs.branch }}
           removed: ${{ steps.removed_files.outputs.removed }}
           proposals: ${{ steps.added_updated_files.outputs.proposals }}
         run: /bin/bash .github/scripts/deploy_approved.sh

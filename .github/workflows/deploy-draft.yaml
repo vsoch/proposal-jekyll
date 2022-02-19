@@ -5,6 +5,8 @@
 # Removed files are not removed until merge
 on:
   pull_request: []
+  branches:
+    - main
 
 jobs:
   deploy-draft:
@@ -28,20 +30,17 @@ jobs:
       - name: Clone Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_FROM: ${{ github.event.inputs.branch }}
         run: /bin/bash .github/scripts/clone.sh
 
       - name: Check for Duplicates
         if: (github.event.pull_request.opened == true || github.event.pull_request.reopened == true)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_FROM: ${{ github.event.inputs.branch }}
           proposals: ${{ steps.changed_files.outputs.proposals }}
         run: /bin/bash .github/scripts/check_duplicates.sh
 
       - name: Update Drafts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_FROM: ${{ github.event.inputs.branch }}
           proposals: ${{ steps.changed_files.outputs.proposals }}
         run: /bin/bash .github/scripts/deploy_drafts.sh
