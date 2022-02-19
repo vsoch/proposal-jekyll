@@ -27,7 +27,6 @@ ls
 if  [[ ! -d "docs" ]]; then
     mv /tmp/repo/docs docs/
     mv /tmp/repo/proposals proposals/
-    mv /tmp/repo/.github .github
     mv /tmp/repo/README.md README.md
 else
     # Update current content to what is in main
@@ -35,12 +34,10 @@ else
     if [[ -d "/tmp/repo/proposals/" ]]; then
         cp -R /tmp/repo/proposals/* proposals/
     fi
-    cp -R /tmp/repo/.github/* .github/
     cp -R /tmp/repo/README.md README.md
 fi
 
 git add README.md
-git add .github/*
 git add docs/*
 
 if [[ -d "proposals" ]]; then
