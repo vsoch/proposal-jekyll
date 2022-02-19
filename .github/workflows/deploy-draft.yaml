@@ -7,7 +7,7 @@ name: Deploy Draft
 on:
   pull_request:
     paths:
-      - proposals/
+      - proposals/*.md
 
 jobs:
   deploy-draft:

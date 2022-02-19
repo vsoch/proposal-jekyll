@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - proposals/*.md
 
 jobs:
   deploy-approved:
