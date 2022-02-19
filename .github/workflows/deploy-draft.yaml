@@ -4,7 +4,9 @@
 # 2. On update deploy the draft to the site
 # Removed files are not removed until merge
 on:
-  pull_request: []
+  pull_request:
+    paths:
+      - proposals/
 
 jobs:
   deploy-draft:
