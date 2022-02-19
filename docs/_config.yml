@@ -54,19 +54,18 @@ badge_rounded: true
 # Build settings
 markdown: kramdown
 
-# Site colors!
-accent_color: "#FFAA4C"
-main_color: "#344CB7"
+# Site colors! (commented out uses default)
+# main_color: "#344CB7"
 
 # Badge colors
 draft_color: "#3282B8"
 inprogress_color: "#FFAA4C"
 completed_color: "#344CB7"
 
-# Permalink colors
-fourth_fade: "#3282B8"
-second_fade: "#035397"
-first_fade: "#5089C6"
+# Permalink colors (commented out uses default)
+# fourth_fade: "#3282B8"
+# second_fade: "#035397"
+# irst_fade: "#5089C6"
 
 # If you add tags to pages, define this variable to link them to some external search
 # If you want to link to tags locally on the site, leave this commented out

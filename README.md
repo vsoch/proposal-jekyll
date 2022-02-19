@@ -23,6 +23,7 @@ This means the following workflows:
 2. Make changes to the _config.yaml and templates in [docs](docs)
 3. Push to your branch and run the create-pages workflow
 4. Turn on GitHub pages in your settings
+5. Add a proposal via PR, and merge when it's done!
 
 ## Usage
 
@@ -42,9 +43,7 @@ Note that we store the main interface under [docs](docs) here.
 #### Jekyll Config
 
 To edit configuration values, customize the [_config.yml](https://github.com/vsoch/proposal-jekyll/blob/main/_config.yml).
-This includes details like the site title and basename, and colors. The default uses
-[these colors](https://colorhunt.co/palette/001e6c0353975089c6ffaa4c) and you might explore
-and update the colors in the _config.yaml to your liking!
+This includes details like the site title and basename, and colors.
 
 ### 3. Deploy
 
@@ -53,13 +52,17 @@ folder and deploy on GitHub pages. We keep the two separate so proposals can
 go into main and via pull requests, and we can always update the pages site
 without merging anything.
 
-**under development**
-
 ### 4. Submit
 
-To submit a proposal, open a pull request to the repository. The markdown file should
-be clearly named under [proposals](proposals). You don't need to add front end matter (yet)
-as this will be automatically added.
+To submit a proposal, you will open a pull request to the repository. 
+
+1. The markdown file should be added under [proposals](proposals).
+2. The name of the file should correspond to the title, e.g., "Automated Container Builds" should be `proposals/automated-container-builds.md`. Only lowercase letters, numbers, and `-` are allowed in the name. You don't need to write the title in the document - it will be added by the automation.
+3. You don't need to add front end matter, as it will be automatically added.
+
+Once you've prepared the markdown file, open a pull request to the repository.
+If you aren't a contributor, when the workflow is approved it will add the draft to
+the site.
 
 ### 5. Develop
 
@@ -71,3 +74,13 @@ jekyll serve
 # or
 bundle exec jekyll serve
 ```
+
+If you want to take the [docs](docs) folder in the main branch and completely wipe
+your current template (start fresh) you can run the dispatch event workflow
+again to create the pages. Do this with caution! Make a backup of your proposals pages first.
+
+## TODO
+
+- fix navigation to include link to proposals home
+- test workflows needed to add proposals
+
