@@ -34,6 +34,10 @@ done
 # Add new proposals to approved!
 mkdir -p _proposals/approved
 for file in ${proposals}; do
+    if [[ -f "${file}" ]]; then
+        printf "Skipping ${file}, does not exist.\n"
+        continue
+    fi    
     name=$(basename ${file})
     dest=_proposals/approved/${name}
     printf "Copying ${file} -> ${dest}\n"

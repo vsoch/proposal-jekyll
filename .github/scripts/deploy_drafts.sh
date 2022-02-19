@@ -12,6 +12,11 @@ printf "Proposals:\n${proposals}"
 mkdir -p _proposals/drafts
 
 for file in ${proposals}; do
+
+    if [[ -f "${file}" ]]; then
+        printf "Skipping ${file}, does not exist.\n"
+        continue
+    fi    
     name=$(basename ${file})
     dest=_proposals/drafts/${name}
     printf "Copying ${file} -> ${dest}"
