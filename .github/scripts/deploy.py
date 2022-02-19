@@ -51,7 +51,9 @@ def get_parser():
     remove = subparsers.add_parser("remove", help="remove non-existing proposals")
 
     for command in [draft, approved]:
-        command.add_argument("files", help="the drafts to consider (changed files)")
+        command.add_argument(
+            "files", help="the drafts to consider (changed files)", nargs="*"
+        )
     return parser
 
 
@@ -155,6 +157,8 @@ def main():
     args, extra = parser.parse_known_args()
     if not args.command:
         help()
+
+    print(args.files)
 
     # Prepare drafts
     if args.command == "draft":
