@@ -42,7 +42,10 @@ fi
 git add README.md
 git add .github/*
 git add docs/*
-git add proposals/*
+
+if [[ -d "proposals" ]]; then
+    git add proposals/*
+fi
 
 if git diff-index --quiet HEAD --; then
     printf "No changes\n"
