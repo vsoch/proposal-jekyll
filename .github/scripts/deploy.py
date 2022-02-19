@@ -17,6 +17,7 @@ def read_file(filename):
         content = fd.read()
     return content
 
+
 # Templates
 
 draft_template = """---
@@ -53,12 +54,13 @@ def get_parser():
         command.add_argument("files", help="the drafts to consider (changed files)")
     return parser
 
+
 def get_title(filename):
     """
     Convert name-of-markdown.md to Name Of Markdown
     """
     basename = os.path.basename(filename)
-    return " ".join([x.capitalize() for x in basename.split('.', 1)[0].split('-')])
+    return " ".join([x.capitalize() for x in basename.split(".", 1)[0].split("-")])
 
 
 def is_correct(filename):
@@ -75,16 +77,20 @@ def is_correct(filename):
         return False
 
     # Check that we end in markdown
-    if not filename.endswith('md'):
+    if not filename.endswith("md"):
         print("%s does not end in .md, skipping." % filename)
         return False
 
     # and only have lowercase and -
     basename = os.path.basename(filename)
     if not re.search("^[a-z0-9-]*$", basename):
-        print("%s contains invalid characters: only lowercase letters, numbers, and - are allowed!" % basename)
+        print(
+            "%s contains invalid characters: only lowercase letters, numbers, and - are allowed!"
+            % basename
+        )
         return False
     return True
+
 
 def find_removed(files):
     """
@@ -94,7 +100,7 @@ def find_removed(files):
     for filename in files:
         if not os.path.exists(filename):
             removed.append(filename)
-    print("::set-output name=removed::$%s" % " ".join(removed)
+    print("::set-output name=removed::$%s" % " ".join(removed))
 
 
 def prepare_preposals(files, template_string):
@@ -112,15 +118,16 @@ def prepare_preposals(files, template_string):
         title = get_title(filename)
         template = template_string % title
         content = template + "\n\n" + read_file(filename)
-        
+
         # Write to final location
         tmppath = os.path.join(tmpfile, os.path.basename(filename))
-        with open(tmppath, 'w') as fd:
+        with open(tmppath, "w") as fd:
             fd.write(content)
         final_files.append(tmppath)
 
     # When we have final files, set in environment
-    print("::set-output name=proposals::$%s" % " ".join(final_files)
+    print("::set-output name=proposals::$%s" % " ".join(final_files))
+
 
 def prepare_approved(files):
     """
@@ -129,7 +136,7 @@ def prepare_approved(files):
     prepare_preposals(files, approved_template)
 
 
-def prepare_drafts(files):   
+def prepare_drafts(files):
     """
     Prepare proposal drafts
     """
@@ -155,6 +162,7 @@ def main():
         prepare_approved(args.files)
     elif args.command == "remove":
         find_removed(args.files)
+
 
 if __name__ == "__main__":
     main()
