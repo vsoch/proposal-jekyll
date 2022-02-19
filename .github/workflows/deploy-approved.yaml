@@ -20,13 +20,13 @@ jobs:
         id: added_updated_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: /bin/bash .github/scripts/deploy.py approved ${changed_files}
+        run: python .github/scripts/deploy.py approved ${changed_files}
 
       - name: Remove deleted proposals
         id: removed_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: /bin/bash .github/scripts/deploy.py remove ${changed_files}
+        run: python .github/scripts/deploy.py remove ${changed_files}
 
       - name: Checkout New Branch
         env:

@@ -1,5 +1,7 @@
 
-# Given a pull request, deploy the draft to the site
+# Given a pull request:
+# 1. On open or reopen check if there is a duplicate draft (and do not allow)
+# 2. On update deploy the draft to the site
 # Removed files are not removed until merge
 on:
   pull_request: []
@@ -21,9 +23,23 @@ jobs:
         id: changed_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: /bin/bash .github/scripts/deploy.py draft ${changed_files}
+        run: python .github/scripts/deploy.py draft ${changed_files}
 
-      - name: Checkout New Branch
+      - name: Clone Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_FROM: ${{ github.event.inputs.branch }}
+        run: /bin/bash .github/scripts/clone.sh
+
+      - name: Check for Duplicates
+        if: (github.event.pull_request.opened == true || github.event.pull_request.reopened == true)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_FROM: ${{ github.event.inputs.branch }}
+          proposals: ${{ steps.changed_files.outputs.proposals }}
+        run: /bin/bash .github/scripts/check_duplicates.sh
+
+      - name: Update Drafts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_FROM: ${{ github.event.inputs.branch }}

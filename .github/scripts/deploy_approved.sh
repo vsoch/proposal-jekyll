@@ -15,24 +15,27 @@ git branch
 git config --global user.name "github-actions"
 git config --global user.email "github-actions@users.noreply.github.com"
 
-# Removed proposals
+# Deleted proposals - on merge a deleted file is removed from drafts and approved
 for file in ${removed}; do
 
     name=$(basename ${file})
-    dest=_proposals/${name}
+    draft=_proposals/drafts/${name}
+    approved=_proposals/drafts/${name}
 
     # If the proposal exists, remove from site
-    if [[ -f ${dest} ]]; then
-        printf "Proposal draft ${file} is removed, deleting ${dest}\n"
-        rm ${dest}
-    fi
+    for dest in ${draft} ${approved}; do
+        if [[ -f ${dest} ]]; then
+            printf "Proposal draft ${file} is removed, deleting ${dest}\n"
+            rm ${dest}
+        fi
+    done
 done
 
-# Add new proposals!
-mkdir -p _proposals
+# Add new proposals to approved!
+mkdir -p _proposals/approved
 for file in ${proposals}; do
     name=$(basename ${file})
-    dest=_proposals/${name}
+    dest=_proposals/approved/${name}
     printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}
