@@ -8,6 +8,7 @@
 import argparse
 import os
 import json
+import re
 import sys
 import tempfile
 
