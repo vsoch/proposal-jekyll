@@ -13,7 +13,7 @@ and wants to pick it up. Proposals always maintain a link to their last pull req
 ## Use Cases
 
 I am hosting an initiative, project, or community that is proposal driven, and I want an easy way to maintain an interface of final
-proposals and drafts. I can use this template to support this functionality!
+proposals and drafts. I can use this template to support this functionality.
 
 ## Sections
 
