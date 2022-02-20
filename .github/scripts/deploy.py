@@ -11,7 +11,6 @@ import json
 import re
 import sys
 import tempfile
-from github import Github
 
 
 def read_file(filename):
@@ -158,6 +157,7 @@ def prepare_drafts(files):
 
 
 def get_pull_request():
+    from github import Github
     gh = Github(os.getenv("GITHUB_TOKEN"))
     events_path = os.getenv("GITHUB_EVENT_PATH")
     event = read_json(events_path)
