@@ -35,7 +35,7 @@ else
         relpath=$(realpath --relative-to=/tmp/repo "$file")
         printf "Realpath: ${relpath}\n"
         # Skip .git history
-        if [[ $relpath = .git* ]]; then
+        if [[ $relpath = .git* ]] && [[ ! $relpath = .github* ]]; then
             continue
         fi 
         # If it's a directory, make relative path and continue
