@@ -36,7 +36,7 @@ jobs:
         run: /bin/bash .github/scripts/clone.sh
 
       - name: Check for Duplicates
-        if: (github.event.pull_request.opened == true || github.event.pull_request.reopened == true)
+        if: (github.event.action == 'opened' || github.event.action == 'reopened')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           proposals: ${{ steps.changed_files.outputs.proposals }}
