@@ -29,7 +29,7 @@ jobs:
           proposals: ${{ steps.changed_files.outputs.proposals }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          pip install PyGithub
+          pip install PyGithub requests
           echo ${proposals}
           /bin/bash .github/scripts/check_duplicates.sh
 
