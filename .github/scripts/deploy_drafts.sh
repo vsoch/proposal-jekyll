@@ -10,7 +10,7 @@ BRANCH_FROM=${BRANCH_FROM:-gh-pages}
 printf "Proposals:\n${proposals}\n"
 
 # Add new draft proposals!
-mkdir -p _proposals/drafts
+mkdir -p docs/_proposals/drafts
 
 for file in ${proposals}; do
 
@@ -19,7 +19,7 @@ for file in ${proposals}; do
         continue
     fi    
     name=$(basename ${file})
-    dest=_proposals/drafts/${name}
+    dest=docs/_proposals/drafts/${name}
     printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}

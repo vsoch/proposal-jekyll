@@ -10,6 +10,7 @@ BRANCH_FROM=${BRANCH_FROM:-gh-pages}
 printf "GitHub Actor: ${GITHUB_ACTOR}\n"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 git branch
+git fetch --unshallow origin
 git checkout -b "${BRANCH_FROM}" || git checkout "${BRANCH_FROM}"
 git branch
 git config --global user.name "github-actions"
@@ -19,8 +20,8 @@ git config --global user.email "github-actions@users.noreply.github.com"
 for file in ${removed}; do
 
     name=$(basename ${file})
-    draft=_proposals/drafts/${name}
-    approved=_proposals/approved/${name}
+    draft=docs/_proposals/drafts/${name}
+    approved=docs/_proposals/approved/${name}
 
     # If the proposal exists, remove from site
     for dest in ${draft} ${approved}; do
@@ -32,14 +33,14 @@ for file in ${removed}; do
 done
 
 # Add new proposals to approved!
-mkdir -p _proposals/approved
+mkdir -p docs/_proposals/approved
 for file in ${proposals}; do
     if [[ ! -f "${file}" ]]; then
         printf "Skipping ${file}, does not exist.\n"
         continue
     fi    
     name=$(basename ${file})
-    dest=_proposals/approved/${name}
+    dest=docs/_proposals/approved/${name}
     printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}
