@@ -30,18 +30,13 @@ if  [[ ! -d "docs" ]]; then
     mv /tmp/repo/README.md README.md
 else
     # Update current content to what is in main
-    cp -R /tmp/repo/docs/* docs/
-    if [[ -d "/tmp/repo/proposals/" ]]; then
-        cp -R /tmp/repo/proposals/* proposals/
-    fi
-    cp -R /tmp/repo/README.md README.md
-fi
-
-git add README.md
-git add docs/*
-
-if [[ -d "proposals" ]]; then
-    git add proposals/*
+    for file in $(find /tmp/repo); do
+        relpath=$(realpath --relative-to=/tmp/repo "$file")
+        dir=$(dirname $file)
+        mkdir -p ${dir}
+        cp $file $relpath
+        git add $relpath
+    done
 fi
 
 if git diff-index --quiet HEAD --; then
