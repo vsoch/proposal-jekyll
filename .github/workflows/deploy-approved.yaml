@@ -10,7 +10,7 @@ on:
 jobs:
   deploy-approved:
     runs-on: ubuntu-latest
-    if: (github.event.pull_request.merged == true && github.base_ref == "refs/heads/main")
+    if: (github.event.pull_request.merged == true && github.base_ref == 'refs/heads/main')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
