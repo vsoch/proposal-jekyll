@@ -31,9 +31,14 @@ if  [[ ! -d "docs" ]]; then
 else
     # Update current content to what is in main
     for file in $(find /tmp/repo); do
-        printf "Found file: ${file}\n"
+        printf "Found: ${file}\n"
         relpath=$(realpath --relative-to=/tmp/repo "$file")
         printf "Realpath: ${relpath}\n"
+        # If it's a directory, make relative path and continue
+        if [[ -d "${file}" ]]; then
+            mkdir -p ${relpath}
+            continue
+        fi
         dir=$(dirname $relpath)   
         printf "Directory: ${dir}\n"
         if [[ "${dir}" != "." ]]; then
