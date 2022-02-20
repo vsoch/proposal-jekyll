@@ -2,15 +2,15 @@ name: Deploy Approved
 
 # Given a push to main, deploy new proposals to the site!
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - main
     paths:
       - proposals/*.md
 
 jobs:
   deploy-approved:
     runs-on: ubuntu-latest
-    if: (github.event.pull_request.merged == true && github.base_ref == 'main')
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,11 +26,7 @@ jobs:
         id: added_updated_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-          ref: ${{ github.base_ref }}
-        run: |
-          pip install PyGithub
-          echo ${ref}
-          python .github/scripts/deploy.py approved ${changed_files}
+        run: python .github/scripts/deploy.py approved ${changed_files}
 
       - name: Remove deleted proposals
         id: removed_files

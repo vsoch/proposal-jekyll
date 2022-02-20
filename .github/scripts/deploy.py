@@ -13,10 +13,12 @@ import sys
 import tempfile
 from github import Github
 
+
 def read_file(filename):
     with open(filename, "r") as fd:
         content = fd.read()
     return content
+
 
 def read_json(filename):
     with open(filename, "r") as fd:
@@ -37,7 +39,6 @@ tags:
 approved_template = """---
 title: %s
 layout: proposal
-pr: %s
 tags: 
  - inprogress
 ---"""
@@ -91,7 +92,7 @@ def is_correct(filename):
         return False
 
     # and only have lowercase and -
-    basename = os.path.basename(filename).replace('.md', '')
+    basename = os.path.basename(filename).replace(".md", "")
     if not re.search("^[a-z0-9-]*$", basename):
         print(
             "%s contains invalid characters: only lowercase letters, numbers, and - are allowed!"
@@ -112,7 +113,7 @@ def find_removed(files):
     print("::set-output name=removed::%s" % " ".join(removed))
 
 
-def prepare_preposals(files, template_string):
+def prepare_preposals(files, template_string, with_pr=False):
     """
     Generic shared function to prepare proposal files
     """
@@ -125,8 +126,11 @@ def prepare_preposals(files, template_string):
 
         # Prepare header
         title = get_title(filename)
-        pr = get_pull_request()
-        template = template_string % (title, pr)
+        if with_pr:
+            pr = get_pull_request()
+            template = template_string % (title, pr)
+        else:
+            template = template_string % title
         content = template + "\n\n" + read_file(filename)
 
         # Write to final location
@@ -143,14 +147,14 @@ def prepare_approved(files):
     """
     Prepare approved (in progress) proposals
     """
-    prepare_preposals(files, approved_template)
+    prepare_preposals(files, approved_template, with_pr=False)
 
 
 def prepare_drafts(files):
     """
     Prepare proposal drafts
     """
-    prepare_preposals(files, draft_template)
+    prepare_preposals(files, draft_template, with_pr=True)
 
 
 def get_pull_request():
@@ -160,8 +164,7 @@ def get_pull_request():
     repo_name = event["repository"]["full_name"]
     repo = gh.get_repo(repo_name)
     number = event["pull_request"]["number"]
-    return "https://github.com/%s/pull/%s" %(repo_name, number)
-
+    return "https://github.com/%s/pull/%s" % (repo_name, number)
 
 
 def main():

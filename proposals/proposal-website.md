@@ -37,4 +37,5 @@ Opportunities for extension include supporting other templates or different kind
 
 ## Needs
 
-We will need a GitHub repository with support for running workflows to enable this.
+We will need a GitHub repository with support for running workflows to enable this,
+which is pretty easy to get since we have GitHub.
