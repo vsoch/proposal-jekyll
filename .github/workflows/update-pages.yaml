@@ -14,7 +14,7 @@ on:
     types: [created]
 
 jobs:
-  create-pages:
+  update-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,4 +25,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-        run: /bin/bash .github/scripts/update_pages.sh
+        run: |
+           wget https://raw.githubusercontent.com/vsoch/proposal-jekyll/main/.github/scripts/update_pages.sh
+           chmod +x update_pages.sh
+           /bin/bash update_pages.sh
