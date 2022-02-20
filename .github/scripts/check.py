@@ -43,12 +43,10 @@ def check_duplicates(files):
     gh = Github(os.getenv("GITHUB_TOKEN"))
     events_path = os.getenv("GITHUB_EVENT_PATH")
     event = read_json(events_path)
-    branch_label = event["pull_request"]["head"]["label"]  # author:branch
-    branch_name = branch_label.split(":")[-1]
     repo_name = event["repository"]["full_name"]
     repo = gh.get_repo(repo_name)
     number = event["pull_request"]["number"]
-    prs = repo.get_pulls(state="open", sort="created", head=branch_label)
+    prs = repo.get_pulls(state="open", sort="created")
 
     worked_on = []
     lookup = {}
