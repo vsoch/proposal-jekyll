@@ -28,7 +28,9 @@ jobs:
         id: changed_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: python .github/scripts/deploy.py draft ${changed_files}
+        run: |
+          pip install PyGithub
+          python .github/scripts/deploy.py draft ${changed_files}
 
       - name: Check for Duplicates
         env:

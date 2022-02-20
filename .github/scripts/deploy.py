@@ -11,7 +11,7 @@ import json
 import re
 import sys
 import tempfile
-
+from github import Github
 
 def read_file(filename):
     with open(filename, "r") as fd:
@@ -24,6 +24,7 @@ def read_file(filename):
 draft_template = """---
 title: %s
 layout: proposal
+pr: %s
 tags: 
  - draft
 ---"""
@@ -31,6 +32,7 @@ tags:
 approved_template = """---
 title: %s
 layout: proposal
+pr: %s
 tags: 
  - inprogress
 ---"""
@@ -46,7 +48,6 @@ def get_parser():
         description=description,
         dest="command",
     )
-
     draft = subparsers.add_parser("draft", help="prepare drafts")
     approved = subparsers.add_parser("approved", help="add approved proposals")
     remove = subparsers.add_parser("remove", help="remove non-existing proposals")
@@ -119,7 +120,8 @@ def prepare_preposals(files, template_string):
 
         # Prepare header
         title = get_title(filename)
-        template = template_string % title
+        pr = get_pull_request()
+        template = template_string % (title, pr)
         content = template + "\n\n" + read_file(filename)
 
         # Write to final location
@@ -144,6 +146,17 @@ def prepare_drafts(files):
     Prepare proposal drafts
     """
     prepare_preposals(files, draft_template)
+
+
+def get_pull_request():
+    gh = Github(os.getenv("GITHUB_TOKEN"))
+    events_path = os.getenv("GITHUB_EVENT_PATH")
+    event = read_json(events_path)
+    repo_name = event["repository"]["full_name"]
+    repo = gh.get_repo(repo_name)
+    number = event["pull_request"]["number"]
+    return "https://github.com/%s/pull/%s" %(repo_name, number)
+
 
 
 def main():
