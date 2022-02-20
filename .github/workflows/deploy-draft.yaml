@@ -18,18 +18,6 @@ jobs:
         if: (github.ref != 'refs/heads/gh-pages')
         uses: actions/checkout@v2
 
-      - name: Save Event Name
-        env:
-           event_name: ${{ github.event.action }}
-        run:
-           printf "${event_name}\n"
-           check_duplicates=false
-           if [[ "${event_name}" == "reopened" ]] || [[ "${event_name}" == "opened" ]]; then
-               check_duplicates=true
-           fi
-           printf "Checking duplicates? ${check_duplicates}\n"
-           echo "check_duplicates=${check_duplicates}" >> $GITHUB_ENV
-
       - name: Find changed files to add
         id: changed_files
         env:
@@ -42,7 +30,7 @@ jobs:
         run: /bin/bash .github/scripts/clone.sh
 
       - name: Check for Duplicates
-        if: ${{ env.check_duplicates == 'true' }}
+        if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: /bin/bash .github/scripts/check_duplicates.sh
