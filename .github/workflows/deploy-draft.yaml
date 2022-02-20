@@ -38,9 +38,9 @@ jobs:
         run: /bin/bash .github/scripts/clone.sh
 
       - name: Check for Duplicates
+        if: (steps.event_name.outputs.event_name == 'opened' || steps.event_name.outputs.event_name == 'reopened')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          proposals: ${{ steps.changed_files.outputs.proposals }}
         run: /bin/bash .github/scripts/check_duplicates.sh
 
       - name: Update Drafts
