@@ -3,9 +3,8 @@
   links:
     - title: "Getting Started"
       url: "docs/getting-started"
-      children:
-        - title: Proposals
-          url: "docs/getting-started"
+    - title: Proposals
+      url: "docs/proposals"
     - title: "About"
       url: "about"
 

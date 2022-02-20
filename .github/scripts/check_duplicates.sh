@@ -10,7 +10,7 @@ fi
 
 for file in ${proposals}; do
     name=$(basename ${file})
-    dest=_proposals/drafts/${name}
+    dest=docs/_proposals/drafts/${name}
 
     if [[ -f "${dest}" ]]; then    
         printf "You cannot work on ${dest} at this time, the draft is already being worked on. Find the pull request in progress and contribute there."
