@@ -3,12 +3,8 @@
 # Check for a duplicate draft on PR open or reopen.
 
 set -e
-if [[ "${proposals}" == "" ]]; then
-    printf "No new proposals found\n"
-    exit 0
-fi
 
-for file in ${proposals}; do
+for file in $(git diff --diff-filter=A --name-only main); do
     name=$(basename ${file})
     dest=docs/_proposals/drafts/${name}
 

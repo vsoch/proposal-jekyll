@@ -1,17 +1,20 @@
 #!/bin/bash
 
 set -e
-if [[ "${changed_files}" == "" ]]; then
-    printf "No changed proposals found\n"
-    exit 0
-fi
 
-BRANCH_FROM=${BRANCH_FROM:-gh-pages}
+BRANCH_FROM=${BRANCH_FROM:-main}
 printf "GitHub Actor: ${GITHUB_ACTOR}\n"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 git branch
 git fetch --unshallow origin
-git checkout -b "${BRANCH_FROM}" || git checkout "${BRANCH_FROM}"
+
+changed_files=""
+for file in $(git diff --diff-filter=A --name-only ${BRANCH_FROM}); do
+    changed_files="$changed_files $file"
+done
+
+# For this PR we are cleaning up main
+git checkout "${BRANCH_FROM}"
 git branch
 git config --global user.name "github-actions"
 git config --global user.email "github-actions@users.noreply.github.com"
@@ -35,5 +38,5 @@ if git diff-index --quiet HEAD --; then
 else
     printf "Changes\n"
     git commit -m "Automated deployment of new proposals! $(date '+%Y-%m-%d')"
-    git push origin "${BRANCH_FROM}" --force
+    git push origin "${BRANCH_FROM}"
 fi
