@@ -1,0 +1,32 @@
+{% assign number_proposals = site.proposals | size %}
+{% if number_proposals > 0 %}
+
+{% assign has_drafts = false %}
+{% assign has_approved = false %}
+{% for proposal in site.proposals %}{% if proposal.state == "draft" %}{% assign has_drafts = true %}{% endif %}{% if proposal.state == "inprogress" %}{% assign has_approved = true %}{% endif %}{% endfor %}
+
+## Proposals
+
+<br>
+
+{% if has_drafts %}
+### Drafts
+
+{% for proposal in site.proposals %}{% if proposal.state == "draft" %}
+ - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
+{% endif %}{% endfor %}{% endif %}
+
+{% if has_approved %}
+### In Progress
+
+{% for proposal in site.proposals %}{% if proposal.state == "inprogress" %}
+ - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
+{% endif %}{% endfor %}{% endif %}
+
+{% include callout.html text="Hey, check out our proposals above! We definitely are looking forward to your feedback." %}
+
+{% else %}
+
+{% include callout.html text="We don't have any proposals yet - come back soon!" %}
+
+{% endif %}
