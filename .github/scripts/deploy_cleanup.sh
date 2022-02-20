@@ -2,17 +2,18 @@
 
 set -e
 
-changed_files=""
-for file in $(git diff --diff-filter=A --name-only main); do
-    changed_files="$changed_files $file"
-done
-
-# For this PR we are cleaning up main
 BRANCH_FROM=${BRANCH_FROM:-main}
 printf "GitHub Actor: ${GITHUB_ACTOR}\n"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 git branch
 git fetch --unshallow origin
+
+changed_files=""
+for file in $(git diff --diff-filter=A --name-only ${BRANCH_FROM}); do
+    changed_files="$changed_files $file"
+done
+
+# For this PR we are cleaning up main
 git checkout "${BRANCH_FROM}"
 git branch
 git config --global user.name "github-actions"
