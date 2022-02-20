@@ -7,6 +7,7 @@ import os
 import json
 import re
 import sys
+import requests
 import tempfile
 from github import Github
 
