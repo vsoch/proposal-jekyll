@@ -19,12 +19,16 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Save Event Name
-        id: event_name
         env:
            event_name: ${{ github.event.action }}
         run:
            printf "${event_name}\n"
-           echo "::set-output name=event_name::${event_name}"
+           check_duplicates = 'false'
+           if [[ "${event_name}" == "reopened" ]] || [[ "${event_name}" == "opened" ]];
+               check_duplicates = 'true'
+           fi
+           printf "Checking duplicates? ${check_duplicates}\n"
+           echo "check_duplicates=${check_duplicates}" >> $GITHUB_ENV
 
       - name: Find changed files to add
         id: changed_files
@@ -38,7 +42,7 @@ jobs:
         run: /bin/bash .github/scripts/clone.sh
 
       - name: Check for Duplicates
-        if: (steps.event_name.outputs.event_name == 'opened' || steps.event_name.outputs.event_name == 'reopened')
+        if: ${{ env.check_duplicates == 'true' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: /bin/bash .github/scripts/check_duplicates.sh
