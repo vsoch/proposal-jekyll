@@ -16,4 +16,4 @@ for file in ${proposals}; do
     fi
 done
 export proposals
-python .github/scripts/check.py duplicates ${proposals}
+python .github/scripts/check.py duplicate ${proposals}
