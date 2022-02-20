@@ -3,25 +3,27 @@
 
 {% assign has_drafts = false %}
 {% assign has_approved = false %}
-{% for proposal in site.proposals %}{% if proposal.state == "draft" %}{% assign has_drafts = true %}{% endif %}{% if proposal.state == "inprogress" %}{% assign has_approved = true %}{% endif %}{% endfor %}
+{% for proposal in site.proposals %}{% for tag in proposal.tags %}{% if tag == "draft" %}{% assign has_drafts = true %}{% endif %}{% if tag == "inprogress" %}{% assign has_approved = true %}{% endif %}{% endfor %}{% endfor %}
 
 ## Proposals
 
-<br>
-
-{% if has_drafts %}
+{% if has_drafts == true %}
 ### Drafts
 
-{% for proposal in site.proposals %}{% if proposal.state == "draft" %}
- - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
-{% endif %}{% endfor %}{% endif %}
+<br>
 
-{% if has_approved %}
+{% for proposal in site.proposals %}{% for tag in proposal.tags %}{% if tag == "draft" %}
+ - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
+{% endif %}{% endfor %}{% endfor %}{% endif %}
+
+{% if has_approved == true %}
 ### In Progress
 
-{% for proposal in site.proposals %}{% if proposal.state == "inprogress" %}
+<br>
+
+{% for proposal in site.proposals %}{% for tag in proposal.tags %}{% if tag == "inprogress" %}
  - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
-{% endif %}{% endfor %}{% endif %}
+{% endif %}{% endfor %}{% endfor %}{% endif %}
 
 {% include callout.html text="Hey, check out our proposals above! We definitely are looking forward to your feedback." %}
 
