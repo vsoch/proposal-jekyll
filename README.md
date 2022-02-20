@@ -12,6 +12,8 @@ With proposals-jekyll:
 
 Read about [#workflows](Workflows), [Working With Proposals](#working-with-proposals), or [How to setup](#setup) a site next.
 
+**under development** things are still buggy and subject to change.
+
 ### Quick Start
 
 1. Fork the repository
