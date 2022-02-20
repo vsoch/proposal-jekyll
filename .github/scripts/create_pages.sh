@@ -32,9 +32,7 @@ if  [[ ! -d "docs" ]]; then
 else
     # Update current content to what is in main
     for file in $(find /tmp/repo); do
-        printf "Found: ${file}\n"
         relpath=$(realpath --relative-to=/tmp/repo "$file")
-        printf "Realpath: ${relpath}\n"
         # Skip .git history
         if [[ $relpath = .git* ]] && [[ ! $relpath = .github* ]]; then
             continue
@@ -45,7 +43,6 @@ else
             continue
         fi
         dir=$(dirname $relpath)   
-        printf "Directory: ${dir}\n"
         if [[ "${dir}" != "." ]]; then
             mkdir -p ${dir}
         fi
@@ -56,10 +53,5 @@ else
     done
 fi
 
-if git diff-index --quiet HEAD --; then
-    printf "No changes\n"
-else
-    printf "Changes\n"
-    git commit -m "Automated deployment of pages! $(date '+%Y-%m-%d')"
-    git push origin "${BRANCH_FROM}" --force
-fi
+git commit -m "Automated deployment of pages! $(date '+%Y-%m-%d')" || exit 0
+git push origin "${BRANCH_FROM}" --force || exit 0
