@@ -23,9 +23,9 @@ jobs:
            event_name: ${{ github.event.action }}
         run:
            printf "${event_name}\n"
-           check_duplicates = 'false'
-           if [[ "${event_name}" == "reopened" ]] || [[ "${event_name}" == "opened" ]];
-               check_duplicates = 'true'
+           check_duplicates=false
+           if [[ "${event_name}" == "reopened" ]] || [[ "${event_name}" == "opened" ]]; then
+               check_duplicates=true
            fi
            printf "Checking duplicates? ${check_duplicates}\n"
            echo "check_duplicates=${check_duplicates}" >> $GITHUB_ENV
