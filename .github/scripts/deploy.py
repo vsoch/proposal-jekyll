@@ -18,6 +18,11 @@ def read_file(filename):
         content = fd.read()
     return content
 
+def read_json(filename):
+    with open(filename, "r") as fd:
+        content = json.loads(fd.read())
+    return content
+
 
 # Templates
 

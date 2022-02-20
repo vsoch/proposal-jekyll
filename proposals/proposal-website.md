@@ -8,7 +8,7 @@ This is a proposal to make a website that will make it easy to colloborate on pr
 4. Merging a pull request will add the draft as a final in progress state, in which case it can be worked on further via PR.
 
 Closing a pull request will not remove a draft, and we do this in case anyone else finds it
-and wants to pick it up.
+and wants to pick it up. Proposals always maintain a link to their last pull request.
 
 ## Use Cases
 
