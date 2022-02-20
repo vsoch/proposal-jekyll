@@ -34,6 +34,10 @@ else
         printf "Found: ${file}\n"
         relpath=$(realpath --relative-to=/tmp/repo "$file")
         printf "Realpath: ${relpath}\n"
+        # Skip .git history
+        if [[ $relpath = .git* ]]; then
+            continue
+        fi 
         # If it's a directory, make relative path and continue
         if [[ -d "${file}" ]]; then
             mkdir -p ${relpath}
