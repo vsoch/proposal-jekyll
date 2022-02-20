@@ -2,8 +2,6 @@
 
 **⭐️ Welcome to Proposals Jekyll! ⭐️**
 
-But don't do any deletion or cleanup on close/reopen, only on merge.
-
 This is a template and actions to help you to collaboratively work on things.
 With proposals-jekyll:
 
@@ -135,5 +133,5 @@ bundle exec jekyll serve
 ```
 
 If you want to take the [docs](https://github.com/vsoch/proposal-jekyll/tree/main/docs) folder in the main branch and completely wipe
-your current template (start fresh) you can run the dispatch event workflow
-again to create the pages. Do this with caution! Make a backup of your proposals pages first.
+your current template (start fresh) you can delete your gh-pages branch and then re-run the creation workflow.
+To update templates or similar, run the update workflow. Do both of these things with caution!
