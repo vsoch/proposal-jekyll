@@ -18,6 +18,7 @@ git branch
 git fetch --unshallow origin
 git checkout -b "${BRANCH_FROM}" || git checkout "${BRANCH_FROM}"
 git branch
+git pull origin gh-pages
 git config --global user.name "github-actions"
 git config --global user.email "github-actions@users.noreply.github.com"
 
