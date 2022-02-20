@@ -31,10 +31,17 @@ if  [[ ! -d "docs" ]]; then
 else
     # Update current content to what is in main
     for file in $(find /tmp/repo); do
+        printf "Found file: ${file}\n"
         relpath=$(realpath --relative-to=/tmp/repo "$file")
-        dir=$(dirname $file)
-        mkdir -p ${dir}
+        printf "Realpath: ${relpath}\n"
+        dir=$(dirname $relpath)   
+        printf "Directory: ${dir}\n"
+        if [[ "${dir}" != "." ]]; then
+            mkdir -p ${dir}
+        fi
+        printf "cp $file $relpath\n"
         cp $file $relpath
+        printf "git add $relpath\n"
         git add $relpath
     done
 fi
