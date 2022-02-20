@@ -26,7 +26,11 @@ jobs:
         id: added_updated_files
         env:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: python .github/scripts/deploy.py approved ${changed_files}
+          ref: ${{ github.base_ref }}
+        run: |
+          pip install PyGithub
+          echo ${ref}
+          python .github/scripts/deploy.py approved ${changed_files}
 
       - name: Remove deleted proposals
         id: removed_files
