@@ -18,6 +18,12 @@ jobs:
         if: (github.ref != 'refs/heads/gh-pages')
         uses: actions/checkout@v2
 
+      - name: Find Changed or New Proposals
+        id: changed-files
+        uses: tj-actions/changed-files@32d6fb28f082f273420574e9de0a30be993bba58
+        with:
+          separator: " "
+
       - name: Find changed files to add
         id: changed_files
         env:

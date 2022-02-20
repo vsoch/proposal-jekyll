@@ -45,7 +45,7 @@ for file in ${proposals}; do
     printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}
-    if [[ ! -f "${draft}" ]]; then
+    if [[ -f "${draft}" ]]; then
         printf "Removing previous draft ${draft}\n"
         rm ${draft}
     fi    
