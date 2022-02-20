@@ -41,9 +41,14 @@ for file in ${proposals}; do
     fi    
     name=$(basename ${file})
     dest=docs/_proposals/approved/${name}
+    draft=docs/_proposals/drafts/${name}
     printf "Copying ${file} -> ${dest}\n"
     cp ${file} ${dest}
     git add ${dest}
+    if [[ ! -f "${draft}" ]]; then
+        printf "Removing previous draft ${draft}\n"
+        rm ${draft}
+    fi    
 done
 if git diff-index --quiet HEAD --; then
     printf "No changes\n"

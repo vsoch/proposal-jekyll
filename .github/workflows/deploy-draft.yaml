@@ -30,6 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install PyGithub
+          echo ${proposals}
           /bin/bash .github/scripts/check_duplicates.sh
 
       - name: Clone Pages        
