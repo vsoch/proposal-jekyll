@@ -2,13 +2,18 @@
 
 **⭐️ Welcome to Proposals Jekyll! ⭐️**
 
+But don't do any deletion or cleanup on close/reopen, only on merge.
+
 This is a template and actions to help you to collaboratively work on things.
 With proposals-jekyll:
 
 1. New pull requests open on the repository are considered proposals.
-2. If you open a pull request that already has a PR open it will not be allowed.
+2. If you open a pull request that already has a PR for a proposal open it will not be allowed.
 3. A new or updated proposal will trigger a workflow to add the draft to the web interface
 3. Merging a pull request will add the draft as a final "approved" state, and remove from drafts, in which case it can be worked on further via PR.
+
+Closing or otherwise not continuing a pull request will not delete the last draft. We do this so that drafts stay accessible
+for someone else to pick up and work on if desired.
 
 Read about [#workflows](Workflows), [Working With Proposals](#working-with-proposals), or [How to setup](#setup) a site next.
 
@@ -54,7 +59,8 @@ want to alter or remove it.
 
 To delete a proposal, simple open a pull request to delete the file
 from the main branch. For the sake of caution it won't be deleted on the PR, but when it is merged
-into main.
+into main. You can also ask the maintainer to manually delete the file
+from the branch in the UI, which might be easier.
 
 #### What happens if close a pull request?
 

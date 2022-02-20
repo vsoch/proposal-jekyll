@@ -24,16 +24,18 @@ jobs:
           changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
         run: python .github/scripts/deploy.py draft ${changed_files}
 
+      - name: Check for Duplicates
+        env:
+          proposals: ${{ steps.changed_files.outputs.proposals }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install PyGithub
+          /bin/bash .github/scripts/check_duplicates.sh
+
       - name: Clone Pages        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: /bin/bash .github/scripts/clone.sh
-
-      - name: Check for Duplicates
-        if: (github.event.action == 'opened')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: /bin/bash .github/scripts/check_duplicates.sh
 
       - name: Update Drafts
         env:
