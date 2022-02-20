@@ -1,4 +1,4 @@
-name: Create GitHub Pages
+name: Update GitHub Pages
 
 on:
   workflow_dispatch:
@@ -19,7 +19,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Create Website
+        with:
+          ref: ${{ github.event.inputs.branch }}
+      - name: Update Website
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: /bin/bash .github/scripts/create_pages.sh
+          REPOSITORY: ${{ github.repository }}
+        run: /bin/bash .github/scripts/update_pages.sh
