@@ -54,8 +54,10 @@ def check_duplicates(files):
     lookup = {}
     for pr in prs:
         # Skip this PR
-        if pr["number"] == number:
+        if pr.number == number:
+            print("Skipping #%s" % pr.number)
             continue
+        print("Checking #%s" % pr.number)
         response = requests.get(
             "https://api.github.com/repos/%s/pulls/%s/files" % (repo_name, number)
         )
