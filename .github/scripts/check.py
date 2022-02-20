@@ -7,6 +7,7 @@ import os
 import json
 import re
 import sys
+import requests
 import tempfile
 from github import Github
 
@@ -48,7 +49,7 @@ def check_duplicates(files):
     repo_name = event["repository"]["full_name"]
     repo = gh.get_repo(repo_name)
     number = event["pull_request"]["number"]
-    prs = repo.get_pulls(state="open", sort="created", head=branch_label)
+    prs = repo.get_pulls(state="open", sort="created")
 
     worked_on = []
     lookup = {}
