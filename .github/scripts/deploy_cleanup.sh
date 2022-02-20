@@ -6,7 +6,8 @@ if [[ "${changed_files}" == "" ]]; then
     exit 0
 fi
 
-BRANCH_FROM=${BRANCH_FROM:-gh-pages}
+# For this PR we are cleaning up main
+BRANCH_FROM=${BRANCH_FROM:-main}
 printf "GitHub Actor: ${GITHUB_ACTOR}\n"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 git branch
@@ -35,5 +36,5 @@ if git diff-index --quiet HEAD --; then
 else
     printf "Changes\n"
     git commit -m "Automated deployment of new proposals! $(date '+%Y-%m-%d')"
-    git push origin "${BRANCH_FROM}" --force
+    git push origin "${BRANCH_FROM}"
 fi
