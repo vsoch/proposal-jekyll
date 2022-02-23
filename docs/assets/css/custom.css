@@ -12,6 +12,17 @@ layout: null
   color: {{ site.main_color }};
 }{% endif %}
 
+{% if site.accent_color %}
+.hover\:text-violet-600:hover {
+    --tw-text-opacity: 1;
+    color: {{ site.accent_color }};
+}
+
+.hover\:border-violet-500:hover {
+    --tw-border-opacity: 1;
+    border-color: {{ site.accent_color }};
+}{% endif %}
+
 
 {% if site.fourth_color %}
 /* TODO this isn't working / changing yet */

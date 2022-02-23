@@ -1,29 +1,21 @@
 {% assign number_proposals = site.proposals | size %}
 {% if number_proposals > 0 %}
 
-{% assign has_drafts = false %}
-{% assign has_approved = false %}
-{% for proposal in site.proposals %}{% for tag in proposal.tags %}{% if tag == "draft" %}{% assign has_drafts = true %}{% endif %}{% if tag == "inprogress" %}{% assign has_approved = true %}{% endif %}{% endfor %}{% endfor %}
+<h2>Proposals</h2>
 
-## Proposals
-
-{% if has_drafts == true %}
-### Drafts
+{% assign tags =  site.proposals | map: 'tags' | join: ','  | split: ',' | uniq %}
+{% for tag in tags %}
+<h3>{{ tag }}</h3>
 
 <br>
 
-{% for proposal in site.proposals %}{% for tag in proposal.tags %}{% if tag == "draft" %}
- - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
-{% endif %}{% endfor %}{% endfor %}{% endif %}
+<ul>
+{% for proposal in site.proposals %}{% if proposal.tags contains tag %}
+    <li><a href="{{ site.baseurl }}{{ proposal.url }}">{{ proposal.title }}</a></li>{% endif %}
+{% endfor %}
+</ul>
+{% endfor %}
 
-{% if has_approved == true %}
-### In Progress
-
-<br>
-
-{% for proposal in site.proposals %}{% for tag in proposal.tags %}{% if tag == "inprogress" %}
- - [{{ proposal.title }}]({{ site.baseurl }}{{ proposal.url }})
-{% endif %}{% endfor %}{% endfor %}{% endif %}
 
 {% include callout.html text="Hey, check out our proposals above! We definitely are looking forward to your feedback." %}
 

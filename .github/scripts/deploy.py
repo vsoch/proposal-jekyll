@@ -32,15 +32,18 @@ title: %s
 layout: proposal
 pr: %s
 tags: 
- - draft
+ - %s
 ---"""
 
 approved_template = """---
 title: %s
 layout: proposal
 tags: 
- - inprogress
+ - %s
 ---"""
+
+draft_label = os.environ.get("draft_label", "draft")
+approved_label = os.environ.get("approved_label", "approved")
 
 
 def get_parser():
@@ -112,7 +115,7 @@ def find_removed(files):
     print("::set-output name=removed::%s" % " ".join(removed))
 
 
-def prepare_preposals(files, template_string, with_pr=False):
+def prepare_preposals(files, template_string, template_tag, with_pr=False):
     """
     Generic shared function to prepare proposal files
     """
@@ -126,10 +129,12 @@ def prepare_preposals(files, template_string, with_pr=False):
         # Prepare header
         title = get_title(filename)
         if with_pr:
-            pr = get_pull_request()
-            template = template_string % (title, pr)
+            pr = PullRequest()
+
+            # Default to custom tag on PR or just draft default
+            template = template_string % (title, pr.url, pr.get_tag() or template_tag)
         else:
-            template = template_string % title
+            template = template_string % (title, template_tag)
         content = template + "\n\n" + read_file(filename)
 
         # Write to final location
@@ -146,25 +151,44 @@ def prepare_approved(files):
     """
     Prepare approved (in progress) proposals
     """
-    prepare_preposals(files, approved_template, with_pr=False)
+    prepare_preposals(files, approved_template, approved_label, with_pr=False)
 
 
 def prepare_drafts(files):
     """
     Prepare proposal drafts
     """
-    prepare_preposals(files, draft_template, with_pr=True)
+    prepare_preposals(files, draft_template, draft_label, with_pr=True)
 
 
-def get_pull_request():
-    from github import Github
-    gh = Github(os.getenv("GITHUB_TOKEN"))
-    events_path = os.getenv("GITHUB_EVENT_PATH")
-    event = read_json(events_path)
-    repo_name = event["repository"]["full_name"]
-    repo = gh.get_repo(repo_name)
-    number = event["pull_request"]["number"]
-    return "https://github.com/%s/pull/%s" % (repo_name, number)
+class PullRequest:
+    """Helper class to get pull request and labels to indicate status"""
+
+    def __init__(self):
+        from github import Github
+
+        self.gh = Github(os.getenv("GITHUB_TOKEN"))
+        events_path = os.getenv("GITHUB_EVENT_PATH")
+        self.event = read_json(events_path)
+        self.repo = self.gh.get_repo(self.repo_name)
+        self.number = self.event["pull_request"]["number"]
+
+    @property
+    def repo_name(self):
+        return self.event["repository"]["full_name"]
+
+    @property
+    def url(self):
+        return "https://github.com/%s/pull/%s" % (self.repo_name, self.number)
+
+    def get_tag(self):
+        pr = self.repo.get_pull(self.number)
+
+        # Return the first status we find
+        for label in pr.get_labels():
+            if label.name.startswith("status-"):
+                name = label.name.replace("status-", "").strip()
+                return name
 
 
 def main():

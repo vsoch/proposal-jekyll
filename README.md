@@ -10,12 +10,24 @@ With proposals-jekyll:
 3. A new or updated proposal will trigger a workflow to add the draft to the web interface
 3. Merging a pull request will add the draft as a final "approved" state, and remove from drafts, in which case it can be worked on further via PR.
 
+This means that a proposal can move between draft and approved, and you can edit the environment of each of the associated
+workflows in [.github/workflows](.github/workflows) to tweak these labels. Finally, if you decide that a draft should have
+some other state, you can add a label to the repository before merge to indicate that. As an example, let's say we have the
+following states:
+
+ - in-review (draft)
+ - graduated (merged and under development / approved)
+ - incubating (being actively worked on but not graduated yet)
+ - paused (not currently under development)
+ 
+You can add a label to a pull request that has the prefix `status-` to indicate a different status, and instead of publishing the proposal as a draft we will
+publish it as your label. This also means that the pull request can remain open until you have decided it is graduated (merged)
+or requires a different state (update the label).
+
 Closing or otherwise not continuing a pull request will not delete the last draft. We do this so that drafts stay accessible
 for someone else to pick up and work on if desired.
 
 Read about [#workflows](Workflows), [Working With Proposals](#working-with-proposals), or [How to setup](#setup) a site next.
-
-**under development** things are still buggy and subject to change.
 
 ### Quick Start
 
@@ -112,7 +124,8 @@ Note that we store the main interface under [docs](https://github.com/vsoch/prop
 #### 2. Customize
 
 To edit configuration values, customize the [_config.yml](https://github.com/vsoch/proposal-jekyll/blob/main/_config.yml).
-This includes details like the site title and basename, and colors.
+This includes details like the site title and basename, and colors. You'll also want to look at the [deploy-approved.yaml](.github/workflows/deploy-approved.yaml) and [deploy-draft.yaml](.github/workflows/deploy-draft.yaml) if you want to customize the tags used for drafts
+and approved, respectfully.
 
 #### 3. Deploy
 

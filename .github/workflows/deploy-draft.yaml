@@ -9,6 +9,10 @@ on:
     paths:
       - proposals/*.md
 
+# CHANGE HERE TO RENAME DRAFT TO SOMETHING ELSE (e.g., in-review)
+env:
+  draft_label: draft
+
 jobs:
   deploy-draft:
     runs-on: ubuntu-latest

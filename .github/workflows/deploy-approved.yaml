@@ -8,6 +8,10 @@ on:
     paths:
       - proposals/*.md
 
+# CHANGE LABEL HERE TO CALL SOMETHING ELSE (e.g., incubating)
+env:
+  approved_label: approved
+
 jobs:
   deploy-approved:
     runs-on: ubuntu-latest
