@@ -5,15 +5,16 @@
 set -e
 
 # Either get proposals from action, or on reopen, derive
+finalset=""
 for file in ${proposals}; do
     name=$(basename ${file})
-    dir=$(dirname ${file})
+    dir=$(basename $(dirname ${file}))
     if [[ "${dir}" == "proposals" ]]; then
         printf "Including $file\n"  
-        proposals="$name $proposals"
+        finalset="$file $finalset"
     else
         printf "Skipping adding $file, not in proposals\n"  
     fi
 done
-export proposals
+export proposals=$finalset
 python .github/scripts/check.py duplicate ${proposals}

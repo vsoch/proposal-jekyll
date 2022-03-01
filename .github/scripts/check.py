@@ -60,21 +60,21 @@ def check_duplicates(files):
             continue
         print("Checking #%s" % pr.number)
         response = requests.get(
-            "https://api.github.com/repos/%s/pulls/%s/files" % (repo_name, number)
+            "https://api.github.com/repos/%s/pulls/%s/files" % (repo_name, pr.number)
         )
-        files = [
+        found = [
             x["filename"]
             for x in response.json()
             if x["status"] in ["added", "modified"]
         ]
-        for file in files:
+        for file in found:
             lookup[file] = pr.number
-        worked_on += files
+        worked_on += found
 
     worked_on = set(worked_on)
     for file in files:
         dirname = os.path.dirname(file)
-        if dirname != "proposals":
+        if not dirname.endswith("proposals"):
             continue
 
         if file in worked_on:
